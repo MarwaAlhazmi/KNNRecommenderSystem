@@ -1,0 +1,217 @@
+﻿<!--DDT-->
+<!ELEMENT PUBLICATIONLIST (PUPLICATION)*>
+<!ELEMENT PUPLICATION (AUTHORS, YEAR, TITLE, JOURNAL?, BOOKCHAPTER?, CONFERENCE?)>
+<!ELEMENT JOURANL (NAME, VOLUME, PAGE, INDEX, IMPACTFACTOR)>
+<!ELEMENT BOOKCHAPTER (EDITORS, BOOKTITLE, PUBLISHER, PAGES)>
+<!ELEMENT CONFERENCE (CTITLE, ABBREVIATION, CYEAR, LOCATION)>
+<!ELEMENT EDITORS (EDITOR+)>
+<!ELEMENT LOCATION (CITY, COUNTRY)>
+<!ELEMENT AUTHORS (AUTHOR+)>
+<!ELEMENT AUTHOR EMPTY>
+<!ELEMENT YEAR (#PCDATA)>
+<!ELEMENT TITLE (#PCDATA)>
+<!ELEMENT NAME (#PCDATA)>
+<!ELEMENT VOLUME (#PCDATA)>
+<!ELEMENT PAGE (#PCDATA)>
+<!ELEMENT INDEX (#PCDATA)>
+<!ELEMENT IMPACTFACTOR (#PCDATA)>
+<!ELEMENT EDITOR EMPTY>
+<!ELEMENT BOOKTITLE (#PCDATA)>
+<!ELEMENT PUBLISHER (#PCDATA)>
+<!ELEMENT PAGES (#PCDATA)>
+<!ELEMENT CTITLE (#PCDATA)>
+<!ELEMENT ABBREVIATION (#PCDATA)>
+<!ELEMENT CYEAR (#PCDATA)>
+<!ELEMENT CITY (#PCDATA)>
+<!ELEMENT COUNTRY (#PCDATA)>
+<!ATTLIST AUTHOR name CDATA #REQUIRED>
+<!ATTLIST EDITOR name CDATA #REQUIRED>
+
+
+
+
+
+<!--QUERY 1-->
+for $j in doc('test')//PUBLICATIONLIST//PUPLICATION
+where $j//AUTHORS//AUTHOR//@name="N. Salim" and $j//JOURNAL//IMPACTFACTOR> 1.0
+return $j//TITLE
+
+<!--QUERY 2-->
+<!--
+count(for $j in doc('test')//PUBLICATIONLIST//PUPLICATION
+where $j//CONFERENCE//CYEAR>2002 and $j//CONFERENCE//CYEAR<2010 and $j//AUTHORS//AUTHOR//@name="N. Salim"
+return $j)
+-->
+
+<?xml version="1.0" encoding="utf-8" ?>
+<PUBLICATIONLIST>
+  <!--FIRST-->
+  <PUPLICATION>
+    <AUTHORS>
+      <AUTHOR  name="S. Al Zahrani"/>
+      <AUTHOR  name="N. Salim"/>
+    </AUTHORS>
+    <YEAR>2011</YEAR>
+    <TITLE>Understanding Plagiarism Linguistic Patterns, Textual Features and Detection Methods</TITLE>
+    <JOURNAL>
+      <NAME>IEEE Transactions on Systems, Man and Cybernetics</NAME>
+      <VOLUME>41(1)</VOLUME>
+      <PAGE>1-17</PAGE>
+      <INDEX>WOS and Scopus</INDEX>
+      <IMPACTFACTOR>2.06</IMPACTFACTOR>
+    </JOURNAL>
+  </PUPLICATION>
+  <!--SECOND-->
+  <PUPLICATION>
+    <AUTHORS>
+      <AUTHOR  name="A. Abdo"/>
+      <AUTHOR  name="N. Salim"/>
+    </AUTHORS>
+    <YEAR>2011</YEAR>
+    <TITLE>New Fragment Weighting Functions for the Bayesian inference network in Ligand-Based Virtual Screening</TITLE>
+    <JOURNAL>
+      <NAME>Journal of Chemical Information and Modeling</NAME>
+      <VOLUME>51(1)</VOLUME>
+      <PAGE>25-32</PAGE>
+      <INDEX>WOS and Scopus</INDEX>
+      <IMPACTFACTOR>3.631</IMPACTFACTOR>
+    </JOURNAL>
+  </PUPLICATION>
+  <!--THIRD-->
+  <PUPLICATION>
+    <AUTHORS>
+      <AUTHOR  name="M.S Binwahlan"/>
+      <AUTHOR  name="L.Suanmali"/>
+      <AUTHOR  name="N.Salim"/>
+    </AUTHORS>
+    <YEAR>2009</YEAR>
+    <TITLE>Text Summarization</TITLE>
+    <BOOKCHAPTER>
+      <EDITORS>
+        <EDITOR  name="A.Z. Abu Bakar"/>
+        <EDITOR  name="R.Ibrahim"/>
+        <EDITOR  name="N.Zakaria"/>
+      </EDITORS>
+      <BOOKTITLE>Database and Text Processing Application</BOOKTITLE>
+      <PUBLISHER>UTM Press</PUBLISHER>
+      <PAGES>1-22</PAGES>
+    </BOOKCHAPTER>
+  </PUPLICATION>
+  <!--FOURTH-->
+  <PUPLICATION>
+    <AUTHORS>
+      <AUTHOR  name="S. Saad"/>
+      <AUTHOR  name="N. Salim"/>
+      <AUTHOR  name="Hakim, Z"/>
+    </AUTHORS>
+    <YEAR>2009</YEAR>
+    <TITLE>Pattern Extraction for Islamic Concept</TITLE>
+    <CONFERENCE>
+      <CTITLE>Proc. IEEE 2nd. International Conference on Electrical Engineering and Informatics</CTITLE>
+      <ABBREVIATION>ICEEI</ABBREVIATION>
+      <CYEAR>2009</CYEAR>
+      <LOCATION>
+        <CITY>UKM</CITY>
+        <COUNTRY>Malaysia</COUNTRY>
+      </LOCATION>
+    </CONFERENCE>
+  </PUPLICATION>
+  <!--FIFTH-->
+  <PUPLICATION>
+    <AUTHORS>
+      <AUTHOR  name="S. Saad"/>
+      <AUTHOR  name="N. Salim"/>
+      <AUTHOR  name="Hakim, Z"/>
+    </AUTHORS>
+    <YEAR>2009</YEAR>
+    <TITLE>Islamic Knowledge Ontology Creation</TITLE>
+    <CONFERENCE>
+      <CTITLE>Proc. The 4th. International Conference for Internet Technology and Secured Transactions</CTITLE>
+      <ABBREVIATION>ICITST</ABBREVIATION>
+      <CYEAR>2009</CYEAR>
+      <LOCATION>
+        <CITY>London</CITY>
+        <COUNTRY>UK</COUNTRY>
+      </LOCATION>
+    </CONFERENCE>
+  </PUPLICATION>
+  
+</PUBLICATIONLIST>
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xsd:element name="PUBLICATIONLIST">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="PUPLICATION">
+          <xsd:complexType>
+            <xsd:sequence>
+              <xsd:element name="AUTHORS">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element minOccurs="1" name="AUTHOR">
+                      <xsd:complexType>
+                        <xsd:attribute name="name" type="xsd:string" use="required" />
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element name="YEAR" type="xsd:integer" />
+              <xsd:element name="TITLE" type="xsd:string" />
+              <xsd:element minOccurs="0" name="CONFERENCE">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="CTITLE" type="xsd:string" />
+                    <xsd:element name="ABBREVIATION" type="xsd:string" />
+                    <xsd:element name="CYEAR" type="xsd:integer" />
+                    <xsd:element name="LOCATION">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element name="CITY" type="xsd:string" />
+                          <xsd:element name="COUNTRY" type="xsd:string" />
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element minOccurs="0" name="BOOKCHAPTER">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="EDITORS">
+                      <xsd:complexType>
+                        <xsd:sequence>
+                          <xsd:element minOccurs="1" name="EDITOR">
+                            <xsd:complexType>
+                              <xsd:attribute name="name" type="xsd:string" use="required" />
+                            </xsd:complexType>
+                          </xsd:element>
+                        </xsd:sequence>
+                      </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="BOOKTITLE" type="xsd:string" />
+                    <xsd:element name="PUBLISHER" type="xsd:string" />
+                    <xsd:element name="PAGES" type="xsd:string" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+              <xsd:element minOccurs="0" name="JOURNAL">
+                <xsd:complexType>
+                  <xsd:sequence>
+                    <xsd:element name="NAME" type="xsd:string" />
+                    <xsd:element name="VOLUME" type="xsd:string" />
+                    <xsd:element name="PAGE" type="xsd:string" />
+                    <xsd:element name="INDEX" type="xsd:string" />
+                    <xsd:element name="IMPACTFACTOR" type="xsd:decimal" />
+                  </xsd:sequence>
+                </xsd:complexType>
+              </xsd:element>
+            </xsd:sequence>
+          </xsd:complexType>
+        </xsd:element>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

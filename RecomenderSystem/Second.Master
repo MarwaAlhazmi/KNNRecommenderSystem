@@ -1,0 +1,106 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Second.Master.cs" Inherits="RecomenderSystem.Second" %>
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Blue Urban, Free CSS Template</title>
+<meta name="keywords" content="Blue Urban, Free CSS Template" />
+<meta name="description" content="Blue Urban, Free CSS Template by templatemo.com" />
+<link href="templatemo_style.css" rel="stylesheet" type="text/css" />
+<asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+
+<form runat="server">
+<div id="templatemo_wrapper" runat="server">
+	
+    <div id="templatemo_header" runat="server">
+    
+   		<div id="site_title">
+            <h1><a href="Default.aspx">RATE<strong>MyBook</strong></a></h1>
+        </div> <!-- end of site_title -->
+        
+        <div id="templatemo_menu" runat="server">
+            <ul runat="server" id="ul2">
+                <li><a href="Default.aspx" class="current">Home</a></li>
+                <li><a href="Rated.aspx">Rated!</a></li>
+                <li><a href="Search.aspx">Search</a></li>
+                <li runat="server" id="lbladmin" visible="false"><a href="Add.aspx">Add</a></li>
+            </ul>    	
+        </div> <!-- end of templatemo_menu -->
+    
+    </div>
+    
+    <div id="templatemo_middle">
+    
+    	<h1>&nbsp;</h1>
+        <p>&nbsp;</p>
+        <div class="learn_btn"></div>
+    
+    </div>
+    
+    <div id="templatemo_content">
+  
+          	  <div class="col_w100" 
+                  style="border-right-style: solid; border-right-width: thin; border-right-color: #C0C0C0">
+		
+            <h5>Categories</h5>
+                    <asp:ListView ID="ListView1" runat="server" DataKeyNames="ID" 
+                      DataSourceID="EntityDataSource1">
+                        
+                        <EmptyDataTemplate>
+                            No data was returned.
+                        </EmptyDataTemplate>
+                      
+                        <ItemSeparatorTemplate>
+
+                        </ItemSeparatorTemplate>
+                        <ItemTemplate>
+                        <ul class="tmo_list">
+                        <li>
+                        <a href="ShowCategory.aspx?ID=<%# Eval("ID") %>"><%# Eval("Name") %></a>
+                        </li>
+                        </ul>
+                        </ItemTemplate>
+                       
+                       
+                    </asp:ListView>
+                  <asp:EntityDataSource ID="EntityDataSource1" runat="server" 
+                      ConnectionString="name=BooksEntities" DefaultContainerName="BooksEntities" 
+                      EnableFlattening="False" EntitySetName="Categories" EntityTypeFilter="Category">
+                  </asp:EntityDataSource>
+        </div>
+        <br />
+        <br />
+              <div class="col_w200">
+		
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+ 
+        </div>
+              
+              
+  
+    
+    <div class="cleaner"></div>
+    </div>
+    <div id="templatemo_footer">
+    <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="Login.aspx" ID="HeadLoginStatus" runat="server">Log In</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Welcome <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Log Out" LogoutPageUrl="~/"/> ]
+                    </LoggedInTemplate>
+                </asp:LoginView>
+    	 | Copyright © 2013 
+         
+    </div>
+    
+</div>
+</form>
+</body>
+</html>

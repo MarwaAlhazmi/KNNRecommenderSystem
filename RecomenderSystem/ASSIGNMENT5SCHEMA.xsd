@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ASSIGNMENT5SCHEMA"
+    targetNamespace="http://tempuri.org/ASSIGNMENT5SCHEMA.xsd"
+    elementFormDefault="qualified"
+    xmlns="http://tempuri.org/ASSIGNMENT5SCHEMA.xsd"
+    xmlns:mstns="http://tempuri.org/ASSIGNMENT5SCHEMA.xsd"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+</xs:schema>

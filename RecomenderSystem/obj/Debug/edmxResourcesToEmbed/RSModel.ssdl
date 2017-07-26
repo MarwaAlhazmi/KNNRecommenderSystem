@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BooksModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+  <EntityContainer Name="BooksModelStoreContainer">
+    <EntitySet Name="Book" EntityType="BooksModel.Store.Book" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Category" EntityType="BooksModel.Store.Category" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Dislike" EntityType="BooksModel.Store.Dislike" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Keyword" EntityType="BooksModel.Store.Keyword" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Rating" EntityType="BooksModel.Store.Rating" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Users" EntityType="BooksModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_Book_Category" Association="BooksModel.Store.FK_Book_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Book" EntitySet="Book" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dislike_Book" Association="BooksModel.Store.FK_Dislike_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Dislike" EntitySet="Dislike" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Dislike_Users" Association="BooksModel.Store.FK_Dislike_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Dislike" EntitySet="Dislike" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Keyword_Keyword" Association="BooksModel.Store.FK_Keyword_Keyword">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Keyword" EntitySet="Keyword" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rating_Book" Association="BooksModel.Store.FK_Rating_Book">
+      <End Role="Book" EntitySet="Book" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Rating_Users" Association="BooksModel.Store.FK_Rating_Users">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Rating" EntitySet="Rating" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Users_Category" Association="BooksModel.Store.FK_Users_Category">
+      <End Role="Category" EntitySet="Category" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Book">
+    <Key>
+      <PropertyRef Name="ISBN" />
+    </Key>
+    <Property Name="ISBN" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Title" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Auther" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Year" Type="int" />
+    <Property Name="Publisher" Type="nvarchar" MaxLength="150" />
+    <Property Name="ImageURL" Type="nvarchar" MaxLength="250" />
+    <Property Name="Description" Type="text" />
+    <Property Name="CategoryID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Category">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="Dislike">
+    <Key>
+      <PropertyRef Name="UserID" />
+      <PropertyRef Name="ISBN" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="ISBN" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Algorithm" Type="nvarchar" MaxLength="50" />
+    <Property Name="Value" Type="bit" Nullable="false" />
+    <Property Name="Date" Type="date" />
+  </EntityType>
+  <EntityType Name="Keyword">
+    <Key>
+      <PropertyRef Name="ISBN" />
+      <PropertyRef Name="Word" />
+    </Key>
+    <Property Name="ISBN" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Word" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="Freq" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Rating">
+    <Key>
+      <PropertyRef Name="ISBN" />
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Date" Type="date" />
+    <Property Name="ISBN" Type="nvarchar" Nullable="false" MaxLength="150" />
+    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="Rate" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="nvarchar" MaxLength="150" />
+    <Property Name="Age" Type="int" />
+    <Property Name="Location" Type="nvarchar" MaxLength="150" />
+    <Property Name="PrefCat" Type="int" />
+    <Property Name="UserName" Type="nvarchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_Book_Category">
+    <End Role="Category" Type="BooksModel.Store.Category" Multiplicity="1" />
+    <End Role="Book" Type="BooksModel.Store.Book" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Book">
+        <PropertyRef Name="CategoryID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dislike_Book">
+    <End Role="Book" Type="BooksModel.Store.Book" Multiplicity="1" />
+    <End Role="Dislike" Type="BooksModel.Store.Dislike" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ISBN" />
+      </Principal>
+      <Dependent Role="Dislike">
+        <PropertyRef Name="ISBN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Dislike_Users">
+    <End Role="Users" Type="BooksModel.Store.Users" Multiplicity="1" />
+    <End Role="Dislike" Type="BooksModel.Store.Dislike" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Dislike">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Keyword_Keyword">
+    <End Role="Book" Type="BooksModel.Store.Book" Multiplicity="1" />
+    <End Role="Keyword" Type="BooksModel.Store.Keyword" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ISBN" />
+      </Principal>
+      <Dependent Role="Keyword">
+        <PropertyRef Name="ISBN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rating_Book">
+    <End Role="Book" Type="BooksModel.Store.Book" Multiplicity="1" />
+    <End Role="Rating" Type="BooksModel.Store.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Book">
+        <PropertyRef Name="ISBN" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="ISBN" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Rating_Users">
+    <End Role="Users" Type="BooksModel.Store.Users" Multiplicity="1" />
+    <End Role="Rating" Type="BooksModel.Store.Rating" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Rating">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Users_Category">
+    <End Role="Category" Type="BooksModel.Store.Category" Multiplicity="0..1" />
+    <End Role="Users" Type="BooksModel.Store.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Category">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="PrefCat" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
